@@ -17,24 +17,54 @@ A simple site could be configured with the following module snippet:
 
 ```
 module "jekyll_blog" {
-  source      = "./modules/s3-website"
-  description = "The Mozilla Release blog"
+  source      = "../tf_modules/s3_website"
+  description = "${var.description}"
 
   # S3
-  service_name   = "webops-release-mozilla-org"
-  index_document = "index.html"
-  acl            = "public-read"
+  service_name   = "${var.service_name}"
 
   # CloudFront
-  website_domains = ["release.allizom.org"]
+  website_domains = "${var.website_domains}"
 
   # CodeBuild
-  container         = "jekyll/jekyll:latest"
+  container         = "${var.build_container}"
   buildspec         = "${data.template_file.buildspec.rendered}"
-  source_repository = "https://github.com/mozilla/release-blog.git"
+  source_repository = "${var.source_repository}"
 }
 ```
 
 This should go into a `main.tf` file in a new folder that is named for the site.
 The parameters like `source_repository` should be passed in through the
-`variables.tf` file.
+`variables.tf`, in the same folder, file like this:
+
+```
+# release.mozilla.org configuration
+
+variable "service_name" {
+  default = "webops-release-mozilla-org"
+}
+
+variable "source_repository" {
+  default = "https://github.com/mozilla/release-blog.git"
+}
+
+variable "website_domains" {
+  type    = "list"
+  default = [
+    "release.allizom.org"
+  ]
+}
+
+variable "description" {
+  default = "The Mozilla Release blog"
+}
+
+variable "build_container" {
+  default = "jekyll/jekyll:latest"
+}
+```
+
+At this point in time, the `buildspec.yml` needs to be written by us to reflect
+the needs of the site we're setting up. Because it can change, I won't be
+placing it as a template file in the `s3_website` module itself. We can reflect
+on this over time and see if we should change how this works.
