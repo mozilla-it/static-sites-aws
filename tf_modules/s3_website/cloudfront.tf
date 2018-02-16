@@ -47,10 +47,5 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     cloudfront_default_certificate = true
   }
 
-  tags {
-    ServiceName      = "release.mozilla.org"
-    TechnicalContact = "infra-webops@mozilla.com"
-    Environment      = "stage"
-    Purpose          = "website"
-  }
+  tags = "${var.webops_tags}"
 }
