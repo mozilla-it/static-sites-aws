@@ -2,10 +2,10 @@
 
 resource "aws_s3_bucket" "prod_bucket" {
   bucket = "${var.service_name}-prod"
-  acl    = "${var.acl}"
+  acl    = "public-read"
 
   website {
-    index_document = "${var.index_document}"
+    index_document = "index.html"
   }
 
   logging {
