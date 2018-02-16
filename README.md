@@ -8,14 +8,15 @@ are hosted in the AWS S3 service.
 ### Future enhancements
 
 The module itself will probably be moved into an isolated repository to enable
-tagged releases.
+tagged releases. For now, it's reasonable to keep it alongside the sites we're
+managing.
 
 ### Usage
 
 A simple site could be configured with the following module snippet:
 
 ```
-module "release_mozilla_org" {
+module "jekyll_blog" {
   source      = "./modules/s3-website"
   description = "The Mozilla Release blog"
 
@@ -34,7 +35,6 @@ module "release_mozilla_org" {
 }
 ```
 
-In addition to this, you would want to prepare a template that Terraform can
-render and pass into the `buildspec` parameter. You will also want to update the
-`terraform.tf` file to include your Terraform shared state backend
-configuration.
+This should go into a `main.tf` file in a new folder that is named for the site.
+The parameters like `source_repository` should be passed in through the
+`variables.tf` file.
