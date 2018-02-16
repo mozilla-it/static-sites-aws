@@ -22,13 +22,3 @@ variable "description" {
 variable "build_container" {
   default = "jekyll/jekyll:latest"
 }
-
-variable "webops_tags" {
-  type    = "map"
-  default = {
-    ServiceName      = "release.mozilla.org"
-    TechnicalContact = "infra-webops@mozilla.com"
-    Environment      = "prod"
-    Purpose          = "website"
-  }
-}
