@@ -52,10 +52,5 @@ resource "aws_codebuild_project" "codebuild-project" {
     buildspec = "${var.buildspec}"
   }
 
-  tags {
-    ServiceName      = "release.mozilla.org"
-    TechnicalContact = "infra-webops@mozilla.com"
-    Environment      = "stage"
-    Purpose          = "website"
-  }
+  tags = "${var.webops_tags}"
 }
