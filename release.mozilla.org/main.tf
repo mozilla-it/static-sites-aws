@@ -3,7 +3,7 @@
 provider "aws" {
   region                  = "us-west-2"
   shared_credentials_file = "~/.aws/credentials"
-  profile                 = "daniel"
+  profile                 = ""
 }
 
 # Load configuration files from template

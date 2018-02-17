@@ -1,8 +1,7 @@
 terraform {
   backend "s3" {
-    bucket  = "webops-terraform-state-prod"
+    bucket  = "webops-terraform-remote-state-store"
     region  = "us-west-2"
-    key     = "websites/static/webops-release-mozilla-org/terraform.tfstate"
-    profile = "daniel"
+    key     = "websites/static/${var.service_name}/terraform.tfstate"
   }
 }
