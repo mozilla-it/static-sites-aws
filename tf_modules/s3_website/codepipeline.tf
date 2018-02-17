@@ -1,74 +1,34 @@
-resource "aws_s3_bucket" "foo" {
-  bucket = "codepipeline_${var.service_name}"
+resource "aws_s3_bucket" "codepipeline_bucket" {
+  bucket = "codepipeline-${var.service_name}"
   acl    = "private"
 }
 
-resource "aws_iam_role" "foo" {
-  name = "codepipeline_${var.service_name}_role"
+data "template_file" "codepipeline_policy_template" {
+  template = "${file("${path.module}/iam/codepipeline-policy.tmpl")}"
 
-  assume_role_policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "codepipeline.amazonaws.com"
-      },
-      "Action": "sts:AssumeRole"
-    }
-  ]
+  vars {
+    codepipeline_bucket = "${aws_s3_bucket.codepipeline_bucket.id}"
+  }
 }
-EOF
+
+resource "aws_iam_role" "codepipeline_service_role" {
+  name = "webops-codepipeline_${var.service_name}_role"
+  assume_role_policy = "${file("${path.module}/iam/codepipeline-role.txt")}"
 }
 
 resource "aws_iam_role_policy" "codepipeline_policy" {
-  name = "codepipeline_${var.service_name}_policy"
-  role = "${aws_iam_role.codepipeline_role.id}"
-  policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect":"Allow",
-      "Action": [
-        "s3:GetObject",
-        "s3:GetObjectVersion",
-        "s3:GetBucketVersioning"
-      ],
-      "Resource": [
-        "${aws_s3_bucket.foo.arn}",
-        "${aws_s3_bucket.foo.arn}/*"
-      ]
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "codebuild:BatchGetBuilds",
-        "codebuild:StartBuild"
-      ],
-      "Resource": "*"
-    }
-  ]
-}
-EOF
+  name   = "codepipeline_${var.service_name}_policy"
+  role   = "${aws_iam_role.codepipeline_service_role.id}"
+  policy = "${data.template_file.codepipeline_policy_template.rendered}"
 }
 
-data "aws_kms_alias" "s3kmskey" {
-  name = "alias/myKmsKey"
-}
-
-resource "aws_codepipeline" "foo" {
+resource "aws_codepipeline" "codepipeline_resource" {
   name     = "tf-test-pipeline"
-  role_arn = "${aws_iam_role.foo.arn}"
+  role_arn = "${aws_iam_role.codepipeline_service_role.arn}"
 
   artifact_store {
-    location = "${aws_s3_bucket.foo.bucket}"
+    location = "${aws_s3_bucket.codepipeline_bucket.bucket}"
     type     = "S3"
-    encryption_key {
-      id   = "${data.aws_kms_alias.s3kmskey.arn}"
-      type = "KMS"
-    }
   }
 
   stage {
@@ -84,9 +44,9 @@ resource "aws_codepipeline" "foo" {
 
       configuration {
         OAuthToken           = "${var.github_token}"
-        Owner                = "${var.source_repository['owner']}"
-        Repo                 = "${var.source_repository['name']}"
-        Branch               = "${var.source_repository['branch']}"
+        Owner                = "${var.source_repository["owner"]}"
+        Repo                 = "${var.source_repository["name"]}"
+        Branch               = "${var.source_repository["branch"]}"
         PollForSourceChanges = "true"
       }
     }
@@ -100,11 +60,11 @@ resource "aws_codepipeline" "foo" {
       category        = "Build"
       owner           = "AWS"
       provider        = "CodeBuild"
-      input_artifacts = ["test"]
+      input_artifacts = ["jekyll_blog_source"]
       version         = "1"
 
       configuration {
-        ProjectName = "${var.codebuild_project_name}"
+        ProjectName = "${var.service_name}"
       }
     }
   }
