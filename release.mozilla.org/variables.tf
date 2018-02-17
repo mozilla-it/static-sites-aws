@@ -1,17 +1,25 @@
 # release.mozilla.org configuration
 
+variable "github_token" {}
+
 variable "service_name" {
   default = "webops-release-mozilla-org"
 }
 
 variable "source_repository" {
-  default = "https://github.com/mozilla/release-blog.git"
+  type    = "map"
+  default = {
+    "https_url"   = "https://github.com/mozilla/release-blog.git",
+    "owner"       = "mozilla"
+    "name"        = "release-blog"
+    "branch"      = "gh-pages"
+  }
 }
 
 variable "website_domains" {
   type    = "list"
   default = [
-    "release.allizom.org"
+    "release-new.hartnell.me"
   ]
 }
 
