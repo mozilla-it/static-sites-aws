@@ -48,7 +48,7 @@ resource "aws_codebuild_project" "codebuild-project" {
 
   source {
     type      = "GITHUB"
-    location  = "${var.source_repository}"
+    location  = "${var.source_repository['https_url']}"
     buildspec = "${var.buildspec}"
   }
 

@@ -80,12 +80,14 @@ resource "aws_codepipeline" "foo" {
       owner            = "ThirdParty"
       provider         = "GitHub"
       version          = "1"
-      output_artifacts = ["test"]
+      output_artifacts = ["jekyll_blog_source"]
 
       configuration {
-        Owner      = "mozilla"
-        Repo       = "release.mozilla.org"
-        Branch     = "gh-pages"
+        OAuthToken           = "${var.github_token}"
+        Owner                = "${var.source_repository['owner']}"
+        Repo                 = "${var.source_repository['name']}"
+        Branch               = "${var.source_repository['branch']}"
+        PollForSourceChanges = "true"
       }
     }
   }
