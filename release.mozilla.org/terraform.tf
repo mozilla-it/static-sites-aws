@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
-    bucket  = "webops-terraform-remote-state-store"
+    bucket  = "webops-terraform-shared-state"
     region  = "us-west-2"
-    key     = "websites/static/${var.service_name}/terraform.tfstate"
+    key     = "websites/static/release_mozilla_org/terraform.tfstate"
   }
 }
