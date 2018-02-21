@@ -31,7 +31,7 @@ variable "build_container" {
   default = "jekyll/jekyll:latest"
 }
 
-variable "webops-tags" {
+variable "webops_tags" {
   type = "map"
   default = {
     ServiceName      = "webops-release-mozilla-org"

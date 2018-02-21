@@ -3,7 +3,7 @@
 provider "aws" {
   region                  = "us-west-2"
   shared_credentials_file = "~/.aws/credentials"
-  profile                 = ""
+  profile                 = "default"
 }
 
 # Load configuration files from template
@@ -28,4 +28,5 @@ module "jekyll_blog" {
   container         = "${var.build_container}"
   buildspec         = "${data.template_file.buildspec.rendered}"
   github_token      = "${var.github_token}"
+  webops_tags       = "${var.webops_tags}"
 }
