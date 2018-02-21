@@ -13,12 +13,7 @@ resource "aws_s3_bucket" "prod_bucket" {
     target_prefix = "${var.service_name}-dh-prod-logs/"
   }
 
-  tags {
-    ServiceName      = "release.mozilla.org"
-    TechnicalContact = "infra-webops@mozilla.com"
-    Environment      = "stage"
-    Purpose          = "website"
-  }
+  tags = "${var.webops_tags}"
 }
 
 # S3 bucket access log storage
@@ -26,11 +21,5 @@ resource "aws_s3_bucket" "prod_bucket" {
 resource "aws_s3_bucket" "log_bucket" {
   bucket = "${var.service_name}-dh-logs"
   acl    = "log-delivery-write"
-
-  tags {
-    ServiceName      = "release.mozilla.org"
-    TechnicalContact = "infra-webops@mozilla.com"
-    Environment      = "stage"
-    Purpose          = "website"
-  }
+  tags = "${var.webops_tags}"
 }
