@@ -11,3 +11,7 @@ variable "website_domains" {
 variable "source_repository" {
   type = "map"
 }
+
+variable "webops_tags" {
+  type = "map"
+}
