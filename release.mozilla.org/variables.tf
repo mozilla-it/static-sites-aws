@@ -19,7 +19,7 @@ variable "source_repository" {
 variable "website_domains" {
   type    = "list"
   default = [
-    "release-new.hartnell.me"
+    "release-stage.allizom.org"
   ]
 }
 
