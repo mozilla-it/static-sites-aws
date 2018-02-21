@@ -1,10 +1,11 @@
 # Load configuration files from template
 
-data "template_file" "codebuild-policy" {
+data "template_file" "codebuild_policy" {
   template = "${file("${path.module}/iam/codebuild-policy.tmpl")}"
 
   vars {
-    bucket_name = "${aws_s3_bucket.prod_bucket.id}"
+    codepipeline_bucket = "${aws_s3_bucket.codepipeline_bucket.id}"
+    prod_bucket         = "${aws_s3_bucket.prod_bucket.id}"
   }
 }
 
@@ -19,7 +20,7 @@ resource "aws_iam_policy" "codebuild_policy" {
   name        = "webops-codebuild-policy"
   path        = "/service-role/"
   description = "Policy used in trust relationship with CodeBuild"
-  policy      = "${data.template_file.codebuild-policy.rendered}"
+  policy      = "${data.template_file.codebuild_policy.rendered}"
 }
 
 resource "aws_iam_policy_attachment" "codebuild_policy_attachment" {
@@ -30,7 +31,7 @@ resource "aws_iam_policy_attachment" "codebuild_policy_attachment" {
 
 # Create CodeBuild job
 
-resource "aws_codebuild_project" "codebuild-project" {
+resource "aws_codebuild_project" "codebuild_project" {
   name          = "${var.service_name}"
   description   = "${var.description}"
   build_timeout = "15"
@@ -48,7 +49,7 @@ resource "aws_codebuild_project" "codebuild-project" {
 
   source {
     type      = "GITHUB"
-    location  = "${var.source_repository}"
+    location  = "${var.source_repository["https_url"]}"
     buildspec = "${var.buildspec}"
   }
 

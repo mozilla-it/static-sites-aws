@@ -10,8 +10,10 @@
                 "logs:PutLogEvents"
             ],
             "Resource": [
-                "arn:aws:s3:::${bucket_name}",
-                "arn:aws:s3:::${bucket_name}/*",
+                "arn:aws:s3:::${prod_bucket}",
+                "arn:aws:s3:::${prod_bucket}/*",
+                "arn:aws:s3:::${codepipeline_bucket}",
+                "arn:aws:s3:::${codepipeline_bucket}/*",
                 "arn:aws:logs:*",
                 "arn:aws:logs:*"
             ]
