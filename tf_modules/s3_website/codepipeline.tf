@@ -23,7 +23,7 @@ resource "aws_iam_role_policy" "codepipeline_policy" {
 }
 
 resource "aws_codepipeline" "codepipeline_resource" {
-  name     = "tf-test-pipeline"
+  name     = "${var.service_name}"
   role_arn = "${aws_iam_role.codepipeline_service_role.arn}"
 
   artifact_store {
