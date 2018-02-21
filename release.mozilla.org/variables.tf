@@ -19,7 +19,8 @@ variable "source_repository" {
 variable "website_domains" {
   type    = "list"
   default = [
-    "release-stage.allizom.org"
+    "release.allizom.org",
+    "release.mozilla.org"
   ]
 }
 
