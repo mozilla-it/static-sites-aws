@@ -1,6 +1,7 @@
 # release.mozilla.org configuration
 
 variable "github_token" {}
+variable "acm_certificate" {}
 
 variable "service_name" {
   default = "webops-release-mozilla-org"

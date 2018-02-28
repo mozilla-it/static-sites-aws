@@ -28,5 +28,6 @@ module "jekyll_blog" {
   container         = "${var.build_container}"
   buildspec         = "${data.template_file.buildspec.rendered}"
   github_token      = "${var.github_token}"
+  acm_certificate   = "${var.acm_certificate}"
   webops_tags       = "${var.webops_tags}"
 }
