@@ -3,6 +3,7 @@ variable "container"         {}
 variable "service_name"      {}
 variable "buildspec"         {}
 variable "github_token"      {}
+variable "acm_certificate"   {}
 
 variable "website_domains" {
   type = "list"
