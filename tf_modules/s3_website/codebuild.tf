@@ -10,21 +10,21 @@ data "template_file" "codebuild_policy" {
 }
 
 resource "aws_iam_role" "codebuild_role" {
-  name               = "webops-codebuild-role-release-blog"
+  name               = "webops-${var.service_name}-codebuild-role"
   assume_role_policy = "${file("${path.module}/iam/codebuild-role.txt")}"
 }
 
 # IAM configuration
 
 resource "aws_iam_policy" "codebuild_policy" {
-  name        = "webops-codebuild-policy"
+  name        = "webops-${var.service_name}-codebuild-policy"
   path        = "/service-role/"
   description = "Policy used in trust relationship with CodeBuild"
   policy      = "${data.template_file.codebuild_policy.rendered}"
 }
 
 resource "aws_iam_policy_attachment" "codebuild_policy_attachment" {
-  name       = "webops-codebuild-policy-attachment"
+  name       = "webops-${var.service_name}-codebuild-policy-attachment"
   policy_arn = "${aws_iam_policy.codebuild_policy.arn}"
   roles      = ["${aws_iam_role.codebuild_role.id}"]
 }
