@@ -11,6 +11,7 @@ phases:
       - git clone ${source_repository} /srv/jekyll
       - cd /srv/jekyll
       - git checkout gh-pages
+      - chown -R jekyll /srv/jekyll
       - bundle install
       - gem install jekyll jekyll-paginate jekyll-sitemap jekyll-gist
   build:
