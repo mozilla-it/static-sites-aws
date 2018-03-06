@@ -1,7 +1,8 @@
 # ccadb.org configuration
 
-variable "github_token" {}
+variable "github_token"    {}
 variable "acm_certificate" {}
+variable "lambda_arn"      {}
 
 variable "service_name" {
   default = "webops-ccadb-org"

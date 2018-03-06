@@ -30,4 +30,5 @@ module "jekyll_blog" {
   github_token      = "${var.github_token}"
   acm_certificate   = "${var.acm_certificate}"
   webops_tags       = "${var.webops_tags}"
+  lambda_arn        = "${var.lambda_arn}"
 }

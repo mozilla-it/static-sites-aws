@@ -48,4 +48,9 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   }
 
   tags = "${var.webops_tags}"
+
+  lambda_function_association {
+    event_type = "viewer-response"
+    lambda_arn = "${var.lambda_arn}"
+  }
 }

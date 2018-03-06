@@ -4,6 +4,7 @@ variable "service_name"      {}
 variable "buildspec"         {}
 variable "github_token"      {}
 variable "acm_certificate"   {}
+variable "lambda_arn"        {}
 
 variable "website_domains" {
   type = "list"
