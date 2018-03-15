@@ -1,0 +1,13 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - # Consider running apt update
+      - # Install dependencies
+  build:
+    commands:
+      - # Run any build commands
+      - # Write content to destination:
+      - # aws s3 sync --acl public-read /tmp/_site/ s3://${bucket_name}
+      - # Read main.tf to see how variables can be used in this template
