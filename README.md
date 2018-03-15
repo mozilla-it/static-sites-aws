@@ -29,6 +29,14 @@ relevant value for each variable
 you are deploying to and update the key so you are no overwriting another
 website’s state file
 
+### Deploying changes
+
+1. Move into the directory that you created in step 1 above
+2. Run `terraform init`
+3. If you experience any errors, make sure you have updated `terraform.tf` and you are using the right credentials
+4. Run `terraform plan`
+5. Run `terraform apply`
+
 ### Contributions
 
 We are more than happy to receive GitHub Issues, pull requests, questions,
