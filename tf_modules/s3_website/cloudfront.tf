@@ -15,7 +15,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   comment             = "${var.description}"
   default_root_object = "index.html"
 
-  aliases = "${var.website_domains}"
+  aliases = ["${var.website_domains}", "${var.service_name}.it-cdn.webops.mozilla.org"]
 
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
