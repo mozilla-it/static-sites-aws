@@ -1,0 +1,10 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo 'No build steps required'
+  build:
+    commands:
+      - echo 'Copying website to S3'
+      - aws s3 sync --acl public-read /tmp/_site/ s3://${bucket_name}
