@@ -12,7 +12,7 @@ data "template_file" "buildspec" {
   template = "${file("./buildspec.yml")}"
 
   vars {
-    bucket_name       = "${module.trackertest.prod_bucket_name}"
+    bucket_name       = "${module.static_site.prod_bucket_name}"
     source_repository = "${var.source_repository["https_url"]}"
   }
 }
