@@ -5,6 +5,10 @@ variable "buildspec"         {}
 variable "github_token"      {}
 variable "acm_certificate"   {}
 
+variable "protocol_policy" {
+  default ="redirect-to-https"
+}
+ 
 variable "website_domains" {
   type = "list"
 }

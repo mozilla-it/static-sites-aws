@@ -55,3 +55,12 @@ variable "webops_tags" {
     Purpose          = "website"
   }
 }
+
+variable "protocol_policy" {
+  default = "allow-all"
+}
+
+
+
+
+

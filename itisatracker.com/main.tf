@@ -30,4 +30,5 @@ module "static_site" {
   github_token      = "${var.github_token}"
   acm_certificate   = "${var.acm_certificate}"
   webops_tags       = "${var.webops_tags}"
+  protocol_policy   = "${var.protocol_policy}"
 }
