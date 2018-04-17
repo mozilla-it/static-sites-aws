@@ -7,4 +7,4 @@ phases:
   build:
     commands:
       - aws s3 sync --acl public-read ./ s3://${bucket_name}
-      - aws s3 cp ./index.php s3://${bucket_name}/index.html --acl public-read
+      - aws s3 cp ./index.php s3://${bucket_name}/index.html --acl public-read --content-type text/html
