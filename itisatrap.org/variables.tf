@@ -32,7 +32,14 @@ variable "source_repository" {
 variable "website_domains" {
   type    = "list"
   default = [
+    "www.itisatrap.org",
     "itisatrap.org",
+    "flashblock.itisatrap.org",
+    "flashallow.itisatrap.org",
+    "except.flashsubdoc.itisatrap.org",
+    "except.flashallow.itisatrap.org",
+    "except.flashblock.itisatrap.org",
+    "flashsubdoc.itisatrap.org"
   ]
 }
 
