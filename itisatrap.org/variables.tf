@@ -16,21 +16,24 @@ variable "aws_credentials_file" {
 }
 
 variable "service_name" {
-  default = "webops-itisatrap_org"
+  # Note: AWS does *not* like underscores in some resource names
+  default = "webops-itisatrap"
 }
 
 variable "source_repository" {
-  type    = "map"
+  type = "map"
+
   default = {
-    "https_url"   = "https://github.com/mozilla/itisatrap.git",
-    "owner"       = "mozilla"
-    "name"        = "itisatrap"
-    "branch"      = "master"
+    "https_url" = "https://github.com/mozilla/itisatrap.git"
+    "owner"     = "mozilla"
+    "name"      = "itisatrap"
+    "branch"    = "master"
   }
 }
 
 variable "website_domains" {
-  type    = "list"
+  type = "list"
+
   default = [
     "www.itisatrap.org",
     "itisatrap.org",
@@ -39,7 +42,7 @@ variable "website_domains" {
     "except.flashsubdoc.itisatrap.org",
     "except.flashallow.itisatrap.org",
     "except.flashblock.itisatrap.org",
-    "flashsubdoc.itisatrap.org"
+    "flashsubdoc.itisatrap.org",
   ]
 }
 
@@ -53,6 +56,7 @@ variable "build_container" {
 
 variable "webops_tags" {
   type = "map"
+
   default = {
     ServiceName      = "webops-release-mozilla-org"
     TechnicalContact = "infra-webops@mozilla.com"
