@@ -23,8 +23,8 @@ variable "source_repository" {
   type    = "map"
   default = {
     "https_url"   = "https://github.com/publicsuffix/publicsuffix.org",
-    "owner"       = "mozilla-it"
-    "name"        = "publicsuffix"
+    "owner"       = "publicsuffix"
+    "name"        = "publicsuffix.org"
     "branch"      = "master"
   }
 }
