@@ -33,6 +33,7 @@ variable "website_domains" {
   type    = "list"
   default = [
     "publicsuffix.org",
+    "www.publicsuffix.org",
   ]
 }
 
