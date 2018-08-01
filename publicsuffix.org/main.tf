@@ -33,6 +33,27 @@ module "static_site" {
   webops_tags       = "${var.webops_tags}"
 }
 
+#LAMMMMMMMMMBBBBBBBDDAAAAAAAAA BABY
+
+resource "aws_iam_role" "lambda_exec_role" {
+  name = "lambda_exec_role"
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Principal": {
+        "Service": "lambda.amazonaws.com"
+      },
+      "Effect": "Allow",
+      "Sid": ""
+    }
+  ]
+}
+EOF
+}
+
 data "archive_file" "lambda-headers-to-zip" {
   type        = "zip"
   source_file = "./lambda-headers.js"
@@ -43,7 +64,7 @@ resource "aws_lambda_function" "lambda-headers" {
   filename         = "./lambda-headers.zip"
   source_code_hash = "${data.archive_file.lambda-headers-zip.output_base64sha256}"
   function_name    = "lambda-headers"
-  role             = "${aws_iam_role.lambda.arn}"
+  role             = "${aws_iam_role.lambda_exec_role.arn}"
   description      = "Provides Correct Response Headers for PublicSuffix"
   handler          = "lambda-headers.handler"
   runtime          = "nodejs6.10"
