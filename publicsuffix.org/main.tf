@@ -32,3 +32,20 @@ module "static_site" {
   acm_certificate   = "${var.acm_certificate}"
   webops_tags       = "${var.webops_tags}"
 }
+
+data "archive_file" "lambda-headers-to-zip" {
+  type        = "zip"
+  source_file = "./lambda-headers.js"
+  output_path = "./lambda-headers.zip"
+}
+
+resource "aws_lambda_function" "lambda-headers" {
+  filename         = "./lambda-headers.zip"
+  source_code_hash = "${data.archive_file.lambda-headers-zip.output_base64sha256}"
+  function_name    = "lambda-headers"
+  role             = "${aws_iam_role.lambda.arn}"
+  description      = "Provides Correct Response Headers for PublicSuffix"
+  handler          = "lambda-headers.handler"
+  runtime          = "nodejs6.10"
+  timeout          = 10
+}
