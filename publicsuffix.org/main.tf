@@ -1,5 +1,5 @@
 # Setup provider
-# getfirebug.com
+# publicsuffix 
 
 provider "aws" {
   region                  = "${var.aws_region}"
