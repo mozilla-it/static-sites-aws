@@ -32,5 +32,7 @@ exports.handler = (event, context, callback) => {
         key:   'Content-Security-Policy',
         value: "default-src 'none'; img-src 'self'; script-src 'unsafe-inline'; style-src 'self'"
     }];
-    
+     
+    callback(null, response);
+
 };
