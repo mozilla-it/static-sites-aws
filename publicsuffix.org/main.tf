@@ -68,5 +68,4 @@ resource "aws_lambda_function" "lambda-headers" {
   description      = "Provides Correct Response Headers for PublicSuffix"
   handler          = "lambda-headers.handler"
   runtime          = "nodejs6.10"
-  timeout          = 10
 }
