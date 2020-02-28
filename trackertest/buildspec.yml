@@ -1,9 +1,0 @@
-version: 0.2
-
-phases:
-  install:
-    commands:
-      - echo "***** Pushing website source to S3 *****"
-  build:
-    commands:
-      - aws s3 sync --acl public-read ./ s3://${bucket_name}
