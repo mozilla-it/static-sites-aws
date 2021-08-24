@@ -20,3 +20,11 @@ variable "source_repository" {
 variable "webops_tags" {
   type = map
 }
+
+variable "ordered_cache_behavior" {
+  type = list
+}
+
+variable "lambda_function_association" {
+  type = list
+}

@@ -32,7 +32,7 @@ resource "aws_codepipeline" "codepipeline_resource" {
   }
 
   stage {
-    name = "Source"
+    name = "Source ${var.service_name}"
 
     action {
       name             = "Source"
@@ -46,6 +46,24 @@ resource "aws_codepipeline" "codepipeline_resource" {
         OAuthToken           = var.github_token
         Owner                = var.source_repository["owner"]
         Repo                 = var.source_repository["name"]
+        Branch               = var.source_repository["branch"]
+        PollForSourceChanges = "true"
+      }
+    }
+
+    action {
+      name             = "Source"
+      category         = "Source"
+      owner            = "ThirdParty"
+      provider         = "GitHub"
+      version          = "1"
+      run_order        = "2"
+      output_artifacts = ["publicsuffix-list"]
+
+      configuration = {
+        OAuthToken           = var.github_token
+        Owner                = var.source_repository["owner"]
+        Repo                 = "list"
         Branch               = var.source_repository["branch"]
         PollForSourceChanges = "true"
       }
