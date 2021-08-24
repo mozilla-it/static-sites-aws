@@ -1,6 +1,6 @@
 resource "aws_cloudfront_distribution" "s3_distribution" {
   origin {
-    domain_name = "${aws_s3_bucket.prod_bucket.website_endpoint}"
+    domain_name = aws_s3_bucket.prod_bucket.website_endpoint
     origin_id   = "origin-${aws_s3_bucket.prod_bucket.id}"
 
     custom_origin_config {
@@ -12,10 +12,10 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   }
 
   enabled             = true
-  comment             = "${var.description}"
+  comment             = var.description
   default_root_object = "index.html"
 
-  aliases = ["${var.website_domains}", "${var.service_name}.it-cdn.webops.mozilla.org"]
+  aliases = flatten([var.website_domains, "${var.service_name}.it-cdn.webops.mozilla.org"])
 
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
@@ -30,7 +30,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
       }
     }
 
-    viewer_protocol_policy = "${var.protocol_policy}"
+    viewer_protocol_policy = var.protocol_policy
     min_ttl                = 0
     default_ttl            = 600
     max_ttl                = 600
@@ -43,9 +43,9 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   }
 
   viewer_certificate {
-    acm_certificate_arn = "${var.acm_certificate}"
+    acm_certificate_arn = var.acm_certificate
     ssl_support_method  = "sni-only"
   }
 
-  tags = "${var.webops_tags}"
+  tags = var.webops_tags
 }

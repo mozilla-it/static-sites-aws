@@ -20,17 +20,17 @@ variable "service_name" {
 }
 
 variable "source_repository" {
-  type    = "map"
+  type = map
   default = {
-    "https_url"   = "https://github.com/publicsuffix/publicsuffix.org",
-    "owner"       = "publicsuffix"
-    "name"        = "publicsuffix.org"
-    "branch"      = "master"
+    "https_url" = "https://github.com/publicsuffix/publicsuffix.org",
+    "owner"     = "publicsuffix"
+    "name"      = "publicsuffix.org"
+    "branch"    = "master"
   }
 }
 
 variable "website_domains" {
-  type    = "list"
+  type = list
   default = [
     "publicsuffix.org",
     "www.publicsuffix.org",
@@ -46,7 +46,7 @@ variable "build_container" {
 }
 
 variable "webops_tags" {
-  type = "map"
+  type = map
   default = {
     ServiceName      = "webops-release-mozilla-org"
     TechnicalContact = "infra-webops@mozilla.com"
