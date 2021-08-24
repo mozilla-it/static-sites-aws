@@ -5,8 +5,6 @@ variable "acm_certificate" {}
 
 # AWS variables
 
-variable "aws_profile" {}
-
 variable "aws_region" {
   default = "us-east-1"
 }
