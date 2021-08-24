@@ -1,22 +1,22 @@
-variable "description"       {}
-variable "container"         {}
-variable "service_name"      {}
-variable "buildspec"         {}
-variable "github_token"      {}
-variable "acm_certificate"   {}
+variable "description" {}
+variable "container" {}
+variable "service_name" {}
+variable "buildspec" {}
+variable "github_token" {}
+variable "acm_certificate" {}
 
 variable "protocol_policy" {
-  default ="redirect-to-https"
+  default = "redirect-to-https"
 }
- 
+
 variable "website_domains" {
-  type = "list"
+  type = list
 }
 
 variable "source_repository" {
-  type = "map"
+  type = map
 }
 
 variable "webops_tags" {
-  type = "map"
+  type = map
 }

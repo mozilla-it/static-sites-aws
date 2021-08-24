@@ -2,19 +2,17 @@
 # publicsuffix 
 
 provider "aws" {
-  region                  = "${var.aws_region}"
-  shared_credentials_file = "${var.aws_credentials_file}"
-  profile                 = "${var.aws_profile}"
+  region = var.aws_region
 }
 
 # Load configuration files from template
 
 data "template_file" "buildspec" {
-  template = "${file("./buildspec.yml")}"
+  template = file("./buildspec.yml")
 
-  vars {
-    bucket_name       = "${module.static_site.prod_bucket_name}"
-    source_repository = "${var.source_repository["https_url"]}"
+  vars = {
+    bucket_name       = module.static_site.prod_bucket_name
+    source_repository = var.source_repository["https_url"]
   }
 }
 
@@ -22,21 +20,21 @@ data "template_file" "buildspec" {
 
 module "static_site" {
   source            = "../tf_modules/s3_website"
-  service_name      = "${var.service_name}"
-  description       = "${var.description}"
-  source_repository = "${var.source_repository}"
-  website_domains   = "${var.website_domains}"
-  container         = "${var.build_container}"
-  buildspec         = "${data.template_file.buildspec.rendered}"
-  github_token      = "${var.github_token}"
-  acm_certificate   = "${var.acm_certificate}"
-  webops_tags       = "${var.webops_tags}"
+  service_name      = var.service_name
+  description       = var.description
+  source_repository = var.source_repository
+  website_domains   = var.website_domains
+  container         = var.build_container
+  buildspec         = data.template_file.buildspec.rendered
+  github_token      = var.github_token
+  acm_certificate   = var.acm_certificate
+  webops_tags       = var.webops_tags
 }
 
 #LAMMMMMMMMMBBBBBBBDDAAAAAAAAA BABY
 
 resource "aws_iam_role" "lambda_exec_role" {
-  name = "lambda_exec_role"
+  name               = "lambda_exec_role"
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
@@ -65,9 +63,9 @@ data "archive_file" "lambda-headers-to-zip" {
 
 resource "aws_lambda_function" "lambda-headers" {
   filename         = "./lambda-headers.zip"
-  source_code_hash = "${data.archive_file.lambda-headers-to-zip.output_base64sha256}"
+  source_code_hash = data.archive_file.lambda-headers-to-zip.output_base64sha256
   function_name    = "lambda-headers"
-  role             = "${aws_iam_role.lambda_exec_role.arn}"
+  role             = aws_iam_role.lambda_exec_role.arn
   description      = "Provides Correct Response Headers for PublicSuffix"
   handler          = "lambda-headers.handler"
   runtime          = "nodejs6.10"
