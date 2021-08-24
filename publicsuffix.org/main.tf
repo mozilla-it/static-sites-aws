@@ -74,5 +74,5 @@ resource "aws_lambda_function" "lambda-headers" {
   role             = aws_iam_role.lambda_exec_role.arn
   description      = "Provides Correct Response Headers for PublicSuffix"
   handler          = "lambda-headers.handler"
-  runtime          = "nodejs6.10"
+  runtime          = "nodejs12.x"
 }
