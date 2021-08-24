@@ -51,6 +51,23 @@ resource "aws_codebuild_project" "codebuild_project" {
     type      = "GITHUB"
     location  = var.source_repository["https_url"]
     buildspec = var.buildspec
+
+    git_submodules_config {
+      fetch_submodules = false
+    }
+  }
+
+  secondary_sources {
+    git_clone_depth     = 1
+    insecure_ssl        = false
+    location            = var.source_repository["https_url_secondary"]
+    report_build_status = false
+    type                = "GITHUB"
+    source_identifier   = "list"
+
+    git_submodules_config {
+      fetch_submodules = false
+    }
   }
 
   tags = var.webops_tags

@@ -6,8 +6,6 @@ phases:
       - echo "***** Pushing website source to S3 *****"
   build:
     commands:
-      - wget -q -O ./list/effective_tld_names.dat https://raw.githubusercontent.com/publicsuffix/list/master/public_suffix_list.dat
-      - cp -f ./list/effective_tld_names.dat ./list/public_suffix_list.dat
       - aws s3 sync --acl public-read ./ s3://${bucket_name}
-      - aws s3 cp ./list/effective_tld_names.dat s3://${bucket_name}/list/effective_tld_names.dat --acl public-read --content-type 'text/plain; charset=UTF-8'
-      - aws s3 cp ./list/public_suffix_list.dat s3://${bucket_name}/list/public_suffix_list.dat --acl public-read --content-type 'text/plain; charset=UTF-8'
+      - aws s3 cp $CODEBUILD_SRC_DIR_list/public_suffix_list.dat s3://webops-publicsuffix/list/effective_tld_names.dat --acl public-read --content-type 'text/plain; charset=UTF-8'
+      - aws s3 cp $CODEBUILD_SRC_DIR_list/public_suffix_list.dat s3://webops-publicsuffix/list/public_suffix_list.dat --acl public-read --content-type 'text/plain; charset=UTF-8'

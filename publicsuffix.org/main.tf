@@ -19,16 +19,22 @@ data "template_file" "buildspec" {
 # Create resources
 
 module "static_site" {
-  source            = "../tf_modules/s3_website"
-  service_name      = var.service_name
-  description       = var.description
-  source_repository = var.source_repository
-  website_domains   = var.website_domains
-  container         = var.build_container
-  buildspec         = data.template_file.buildspec.rendered
-  github_token      = var.github_token
-  acm_certificate   = var.acm_certificate
-  webops_tags       = var.webops_tags
+  source                 = "../tf_modules/s3_website"
+  service_name           = var.service_name
+  description            = var.description
+  source_repository      = var.source_repository
+  website_domains        = var.website_domains
+  container              = var.build_container
+  buildspec              = data.template_file.buildspec.rendered
+  github_token           = var.github_token
+  acm_certificate        = var.acm_certificate
+  webops_tags            = var.webops_tags
+  ordered_cache_behavior = var.ordered_cache_behavior
+  lambda_function_association = [{
+    event_type   = "viewer-response"
+    include_body = false
+    lambda_arn   = aws_lambda_function.lambda-headers.arn
+  }]
 }
 
 #LAMMMMMMMMMBBBBBBBDDAAAAAAAAA BABY
