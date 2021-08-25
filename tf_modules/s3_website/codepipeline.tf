@@ -32,10 +32,10 @@ resource "aws_codepipeline" "codepipeline_resource" {
   }
 
   stage {
-    name = "Source ${var.service_name}"
+    name = "Source-${var.service_name}"
 
     action {
-      name             = "Source"
+      name             = "Source-${var.service_name}-1"
       category         = "Source"
       owner            = "ThirdParty"
       provider         = "GitHub"
@@ -52,7 +52,7 @@ resource "aws_codepipeline" "codepipeline_resource" {
     }
 
     action {
-      name             = "Source"
+      name             = "Source-${var.service_name}-2"
       category         = "Source"
       owner            = "ThirdParty"
       provider         = "GitHub"

@@ -33,7 +33,7 @@ module "static_site" {
   lambda_function_association = [{
     event_type   = "viewer-response"
     include_body = false
-    lambda_arn   = aws_lambda_function.lambda-headers.arn
+    lambda_arn   = "${aws_lambda_function.lambda-headers.arn}:${aws_lambda_function.lambda-headers.version}"
   }]
 }
 
