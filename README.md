@@ -32,6 +32,7 @@ website’s state file
 ### Deploying changes
 
 1. Move into the directory that you created in step 1 above
+2. Run `tflint`
 2. Run `terraform init`
 3. If you experience any errors, make sure you have updated `terraform.tf` and you are using the right credentials
 4. Run `terraform plan`
